@@ -59,11 +59,11 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
 		paddingLeft: "5px",
 	};
 	const adminViewableLinkStyle: React.CSSProperties = {
-		display: loggedInAsAdmin ? "block" : "none",
+		display: loggedInAsAdmin ? "inline" : "none",
 		paddingLeft: "5px",
 	};
 	const csvLinkStyle: React.CSSProperties = {
-		display: renderCSVButton ? "block" : "none",
+		display: renderCSVButton ? "inline" : "none",
 		paddingLeft: "5px",
 	};
 
@@ -92,7 +92,7 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
 				<TooltipHelpContainer page={dataFor} />
 				<TooltipMarkerComponent page={dataFor} helpTextId="help.home.header" />
 				<Link
-				style={adminViewableLinkStyle}
+					style={adminViewableLinkStyle}
 					to='/admin'>
 					<Button disabled={shouldAdminButtonDisabled}
 						outline><FormattedMessage id='admin.panel' />
