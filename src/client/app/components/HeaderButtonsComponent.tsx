@@ -4,7 +4,6 @@
 
  import * as React from "react";
  import { useEffect } from 'react';
- import Dropdown from 'react-bootstrap/Dropdown';
  import { Link } from "react-router-dom";
  import { Button } from "reactstrap";
  import { FormattedMessage } from "react-intl";
@@ -61,9 +60,11 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
 	};
 	const adminViewableLinkStyle: React.CSSProperties = {
 		display: loggedInAsAdmin ? "block" : "none",
+		paddingLeft: "5px",
 	};
 	const csvLinkStyle: React.CSSProperties = {
 		display: renderCSVButton ? "block" : "none",
+		paddingLeft: "5px",
 	};
 
 	const dispatch = useDispatch();
@@ -74,11 +75,8 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
         } else {
             deleteToken();
             dispatch(clearCurrentUser());
-            // component.forceUpdate();
         }
     };
-
-	
 
 	return (
 		<div>
@@ -93,56 +91,62 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
 			<div className={args.showCollapsedMenuButton ? "d-none d-lg-block" : ""}>
 				<TooltipHelpContainer page={dataFor} />
 				<TooltipMarkerComponent page={dataFor} helpTextId="help.home.header" />
-				<Dropdown style={linkStyle}>
-					<Dropdown.Toggle variant="outline-dark">Menu</Dropdown.Toggle>
-					<Dropdown.Menu>
-						<Dropdown.Item 
-							disabled = {shouldHomeButtonDisabled} 
-							onClick={() => {window.location.href = "/";}}>
-							<FormattedMessage id="home" />
-						</Dropdown.Item>
-						<Dropdown.Item 
-							style={adminViewableLinkStyle} 
-							disabled = {shouldAdminButtonDisabled}
-							onClick={() => {window.location.href = "/admin";}}>
-							<FormattedMessage id="admin.panel" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							style={adminViewableLinkStyle}
-							disabled = {shouldConversionsButtonDisabled}
-							onClick={() => {window.location.href = "/conversions";}}>
-							<FormattedMessage id="conversions" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							style={csvLinkStyle}
-							disabled={shouldCSVButtonDisabled}
-							onClick={() => {window.location.href = "/csv";}}>
-							<FormattedMessage id="csv" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							disabled={shouldGroupsButtonDisabled}
-							onClick={() => {window.location.href = "/groups";}}>
-							<FormattedMessage id="groups" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							style={adminViewableLinkStyle}
-							disabled={shouldMapsButtonDisabled}
-							onClick={() => {window.location.href = "/maps";}}>
-							<FormattedMessage id="maps" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							disabled={shouldMetersButtonDisabled}
-							onClick={() => {window.location.href = "/meters";}}>
-							<FormattedMessage id="meters" />
-						</Dropdown.Item>
-						<Dropdown.Item
-							style={adminViewableLinkStyle}
-							disabled={shouldUnitsButtonDisabled}
-							onClick={() => {window.location.href = "/units";}}>
-							<FormattedMessage id="units" />
-						</Dropdown.Item>
-					</Dropdown.Menu>
-				</Dropdown>
+				<Link
+				style={adminViewableLinkStyle}
+					to='/admin'>
+					<Button disabled={shouldAdminButtonDisabled}
+						outline><FormattedMessage id='admin.panel' />
+					</Button>
+				</Link>
+				<Link
+					style={adminViewableLinkStyle}
+					to='/conversions'>
+					<Button disabled={shouldConversionsButtonDisabled}
+						outline><FormattedMessage id='conversions' />
+					</Button>
+				</Link>
+				<Link
+					style={csvLinkStyle}
+					to='/csv'>
+					<Button disabled={shouldCSVButtonDisabled}
+						outline><FormattedMessage id='csv' />
+					</Button>
+				</Link>
+				<Link
+					style={linkStyle}
+					to='/groups'>
+					<Button disabled={shouldGroupsButtonDisabled}
+						outline><FormattedMessage id='groups' />
+					</Button>
+				</Link>
+				<Link
+					style={linkStyle}
+					to='/'>
+					<Button disabled={shouldHomeButtonDisabled}
+						outline><FormattedMessage id='home' />
+					</Button>
+				</Link>
+				<Link
+					style={adminViewableLinkStyle}
+					to='/maps'>
+					<Button disabled={shouldMapsButtonDisabled}
+						outline><FormattedMessage id='maps' />
+					</Button>
+				</Link>
+				<Link
+					style={linkStyle}
+					to='/meters'>
+					<Button disabled={shouldMetersButtonDisabled}
+						outline><FormattedMessage id='meters' />
+					</Button>
+				</Link>
+				<Link
+					style={adminViewableLinkStyle}
+					to='/units'>
+					<Button disabled={shouldUnitsButtonDisabled}
+						outline><FormattedMessage id='units' />
+					</Button>
+				</Link>
 				<Link style={loginLinkStyle} to="/login">
 					<Button outline>
 						<FormattedMessage id="log.in" />
@@ -157,10 +161,3 @@ export default function HeaderButtonsComponent(args: {showCollapsedMenuButton: b
 		</div>
 	);
 }
-
-
-// hooks are easier since everything gets put into a single file
-// makes maintaining the code easier
-// don't have to mess around with props, so you couldn't access state and you would have to access the state from a container
-// OED is converting everything to react hooks, since OED is older than react hooks
-// 	home/nicolax/Desktop/OED/src/client/app/components/ChartSelectComponent.tsx
